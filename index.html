@@ -366,6 +366,7 @@ input,select{
 type="number"
 id="valorPago"
 placeholder="Quanto o cliente deu?"
+oninput="calcularTrocoAutomatico()"
 >
 
 <div
@@ -962,6 +963,40 @@ function resetarTudo(){
 }
 
 carregarDados();
+
+  function calcularTrocoAutomatico(){
+
+  let total=0;
+
+  pedido.forEach(item=>{
+    total+=item.preco;
+  });
+
+  const pago=parseFloat(
+    document.getElementById("valorPago").value
+  );
+
+  if(isNaN(pago)){
+
+    document.getElementById("trocoTexto")
+    .innerText="Troco: R$ 0,00";
+
+    return;
+  }
+
+  const troco=pago-total;
+
+  if(troco<0){
+
+    return;
+  }
+
+  document.getElementById("trocoTexto")
+  .innerText=
+  `Troco: R$ ${troco
+  .toFixed(2)
+  .replace(".",",")}`;
+}
 
 </script>
 
