@@ -22,8 +22,8 @@ body{
 .topo{
   background:linear-gradient(90deg,#ff8a3d,#ff5f57);
   color:#fff;
-  padding:18px 30px;
-  font-size:2rem;
+  padding:18px 25px;
+  font-size:1.8rem;
   font-weight:bold;
   box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
@@ -55,17 +55,17 @@ body{
   transform:translateY(-3px);
 }
 
-.produto .emoji{
+.emoji{
   font-size:1.6rem;
   margin-bottom:8px;
 }
 
-.produto .nome{
+.nome{
   font-weight:bold;
   margin-bottom:10px;
 }
 
-.produto .preco{
+.preco{
   color:#ff5f57;
 }
 
@@ -249,6 +249,22 @@ input,select{
   z-index:999;
 }
 
+.btn-historico{
+  position:fixed;
+  right:18px;
+  bottom:100px;
+  width:65px;
+  height:65px;
+  border:none;
+  border-radius:50%;
+  background:linear-gradient(90deg,#ff8a3d,#ff5f57);
+  color:#fff;
+  font-size:1.6rem;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+  z-index:999;
+}
+
 @media(max-width:1000px){
 
   .container{
@@ -311,7 +327,7 @@ input,select{
 <div class="card">
 
 <div class="card-topo">
-<span>⚙️ Opções</span>
+⚙️ Opções
 </div>
 
 <div class="conteudo">
@@ -328,7 +344,7 @@ input,select{
 📁 Arquivar Caixa
 </button>
 
-<button class="btn" onclick="abrirHistorico()">
+<button class="btn" onclick="abrirHistoricoArquivado()">
 📊 Visualizar Totais
 </button>
 
@@ -351,11 +367,8 @@ input,select{
 <select id="metodoPagamento" onchange="mostrarCampoDinheiro()">
 
 <option value="Dinheiro">💵 Dinheiro</option>
-
 <option value="PIX">📱 PIX</option>
-
 <option value="Débito">💳 Débito</option>
-
 <option value="Crédito">💳 Crédito</option>
 
 </select>
@@ -384,7 +397,7 @@ Troco: R$ 0,00
 </div>
 
 <button class="btn" onclick="finalizarVenda()">
-✅ Finalizar Venda
+✅ Confirmar Venda
 </button>
 
 <button class="btn" onclick="fecharModal('modalFinalizar')">
@@ -413,6 +426,10 @@ Fechar
 
 </div>
 
+<button class="btn-historico" onclick="abrirHistoricoRapido()">
+🕘
+</button>
+
 <button class="btn-reset-total" onclick="resetarTudo()">
 ⚠️
 </button>
@@ -420,20 +437,20 @@ Fechar
 <script>
 
 const produtos=[
-  {emoji:"🌭",nome:"Cachorro Quente",preco:12},
-  {emoji:"🔥",nome:"Quentão",preco:10},
-  {emoji:"🌽",nome:"Milho",preco:8},
-  {emoji:"🍰",nome:"Bolo",preco:7},
-  {emoji:"🥤",nome:"Refrigerante",preco:6},
-  {emoji:"🧃",nome:"Suco",preco:5},
-  {emoji:"💧",nome:"Água",preco:3},
-  {emoji:"🎯",nome:"Brincadeira",preco:4},
-  {emoji:"🍟",nome:"Batata Frita",preco:15},
-  {emoji:"🥖",nome:"Pão com Linguiça",preco:14},
-  {emoji:"🥟",nome:"Fogazza",preco:13},
-  {emoji:"🎟️",nome:"Cartela de Bingo",preco:5},
-  {emoji:"🏆",nome:"Bingão",preco:20},
-  {emoji:"🥜",nome:"Chá do Padre",preco:9}
+{emoji:"🌭",nome:"Cachorro Quente",preco:12},
+{emoji:"🔥",nome:"Quentão",preco:10},
+{emoji:"🌽",nome:"Milho",preco:8},
+{emoji:"🍰",nome:"Bolo",preco:7},
+{emoji:"🥤",nome:"Refrigerante",preco:6},
+{emoji:"🧃",nome:"Suco",preco:5},
+{emoji:"💧",nome:"Água",preco:3},
+{emoji:"🎯",nome:"Brincadeira",preco:4},
+{emoji:"🍟",nome:"Batata Frita",preco:15},
+{emoji:"🥖",nome:"Pão com Linguiça",preco:14},
+{emoji:"🥟",nome:"Fogazza",preco:13},
+{emoji:"🎟️",nome:"Cartela de Bingo",preco:5},
+{emoji:"🏆",nome:"Bingão",preco:20},
+{emoji:"🥜",nome:"Chá do Padre",preco:9}
 ];
 
 let pedido=[];
@@ -445,558 +462,603 @@ const totalEl=document.getElementById("total");
 
 function salvarDados(){
 
-  localStorage.setItem(
-    "quermesse_pedido",
-    JSON.stringify(pedido)
-  );
+localStorage.setItem(
+"quermesse_pedido",
+JSON.stringify(pedido)
+);
 
-  localStorage.setItem(
-    "quermesse_vendas",
-    JSON.stringify(vendas)
-  );
+localStorage.setItem(
+"quermesse_vendas",
+JSON.stringify(vendas)
+);
+
 }
 
 function carregarDados(){
 
-  const pedidoSalvo=
-  localStorage.getItem("quermesse_pedido");
+const pedidoSalvo=
+localStorage.getItem("quermesse_pedido");
 
-  const vendasSalvas=
-  localStorage.getItem("quermesse_vendas");
+const vendasSalvas=
+localStorage.getItem("quermesse_vendas");
 
-  if(pedidoSalvo){
-    pedido=JSON.parse(pedidoSalvo);
-  }
+if(pedidoSalvo){
+pedido=JSON.parse(pedidoSalvo);
+}
 
-  if(vendasSalvas){
-    vendas=JSON.parse(vendasSalvas);
-  }
+if(vendasSalvas){
+vendas=JSON.parse(vendasSalvas);
+}
 
-  atualizarPedido();
+atualizarPedido();
+
 }
 
 produtos.forEach(produto=>{
 
-  produtosDiv.innerHTML+=`
+produtosDiv.innerHTML+=`
 
-  <button class="produto"
-  onclick='adicionarProduto(${JSON.stringify(produto)})'>
+<button class="produto"
+onclick='adicionarProduto(${JSON.stringify(produto)})'>
 
-    <div class="emoji">${produto.emoji}</div>
+<div class="emoji">${produto.emoji}</div>
 
-    <div class="nome">${produto.nome}</div>
+<div class="nome">${produto.nome}</div>
 
-    <div class="preco">
-      R$ ${produto.preco.toFixed(2).replace(".",",")}
-    </div>
+<div class="preco">
+R$ ${produto.preco.toFixed(2).replace(".",",")}
+</div>
 
-  </button>
+</button>
 
-  `;
+`;
+
 });
 
 function adicionarProduto(produto){
 
-  pedido.push(produto);
+pedido.push(produto);
 
-  atualizarPedido();
+atualizarPedido();
 
-  salvarDados();
+salvarDados();
+
 }
 
 function removerItem(nome){
 
-  const index=
-  pedido.findIndex(item=>item.nome===nome);
+const index=
+pedido.findIndex(item=>item.nome===nome);
 
-  if(index!==-1){
+if(index!==-1){
 
-    pedido.splice(index,1);
+pedido.splice(index,1);
 
-    atualizarPedido();
+atualizarPedido();
 
-    salvarDados();
-  }
+salvarDados();
+
+}
+
 }
 
 function atualizarPedido(){
 
-  lista.innerHTML="";
+lista.innerHTML="";
 
-  let agrupados={};
-  let total=0;
+let agrupados={};
+let total=0;
 
-  pedido.forEach(item=>{
+pedido.forEach(item=>{
 
-    if(!agrupados[item.nome]){
+if(!agrupados[item.nome]){
 
-      agrupados[item.nome]={
-        quantidade:0,
-        preco:item.preco,
-        emoji:item.emoji
-      };
-    }
+agrupados[item.nome]={
+quantidade:0,
+preco:item.preco,
+emoji:item.emoji
+};
 
-    agrupados[item.nome].quantidade++;
-  });
+}
 
-  for(let nome in agrupados){
+agrupados[item.nome].quantidade++;
 
-    let item=agrupados[nome];
-    let subtotal=item.preco*item.quantidade;
+});
 
-    total+=subtotal;
+for(let nome in agrupados){
 
-    lista.innerHTML+=`
+let item=agrupados[nome];
+let subtotal=item.preco*item.quantidade;
 
-    <div class="item">
+total+=subtotal;
 
-      <div>
-        ${item.emoji} ${nome}
-      </div>
+lista.innerHTML+=`
 
-      <div class="item-centro">
-        x${item.quantidade}
-      </div>
+<div class="item">
 
-      <div>
-        R$ ${subtotal.toFixed(2).replace(".",",")}
-      </div>
+<div>
+${item.emoji} ${nome}
+</div>
 
-      <button
-      class="remover-btn"
-      onclick="removerItem('${nome}')">
+<div class="item-centro">
+x${item.quantidade}
+</div>
 
-      −
+<div>
+R$ ${subtotal.toFixed(2).replace(".",",")}
+</div>
 
-      </button>
+<button
+class="remover-btn"
+onclick="removerItem('${nome}')">
 
-    </div>
+−
 
-    `;
-  }
+</button>
 
-  totalEl.innerText=
-  `R$ ${total.toFixed(2).replace(".",",")}`;
+</div>
+
+`;
+
+}
+
+totalEl.innerText=
+`R$ ${total.toFixed(2).replace(".",",")}`;
+
 }
 
 function limparPedido(){
 
-  pedido=[];
+pedido=[];
 
-  atualizarPedido();
+atualizarPedido();
 
-  salvarDados();
+salvarDados();
+
 }
 
 function abrirFinalizacao(){
 
-  if(pedido.length===0){
+if(pedido.length===0){
 
-    alert("Adicione itens!");
+alert("Adicione itens!");
 
-    return;
-  }
+return;
 
-  document.getElementById("modalFinalizar")
-  .style.display="flex";
+}
 
-  mostrarCampoDinheiro();
+document.getElementById("modalFinalizar")
+.style.display="flex";
+
+mostrarCampoDinheiro();
+
 }
 
 function mostrarCampoDinheiro(){
 
-  const metodo=
-  document.getElementById("metodoPagamento").value;
+const metodo=
+document.getElementById("metodoPagamento").value;
 
-  const area=
-  document.getElementById("areaDinheiro");
+const area=
+document.getElementById("areaDinheiro");
 
-  if(metodo==="Dinheiro"){
+if(metodo==="Dinheiro"){
 
-    area.style.display="block";
+area.style.display="block";
 
-  }else{
+}else{
 
-    area.style.display="none";
-  }
+area.style.display="none";
+
+}
+
+}
+
+function calcularTrocoAutomatico(){
+
+let total=0;
+
+pedido.forEach(item=>{
+total+=item.preco;
+});
+
+const pago=parseFloat(
+document.getElementById("valorPago").value
+);
+
+if(isNaN(pago)){
+
+document.getElementById("trocoTexto")
+.innerText="Troco: R$ 0,00";
+
+return;
+
+}
+
+const troco=pago-total;
+
+if(troco<0){
+
+document.getElementById("trocoTexto")
+.innerText=
+`Faltam R$ ${Math.abs(troco)
+.toFixed(2)
+.replace(".",",")}`;
+
+return;
+
+}
+
+document.getElementById("trocoTexto")
+.innerText=
+`Troco: R$ ${troco
+.toFixed(2)
+.replace(".",",")}`;
+
 }
 
 function fecharModal(id){
 
-  document.getElementById(id)
-  .style.display="none";
+document.getElementById(id)
+.style.display="none";
+
 }
 
 function finalizarVenda(){
 
-  let total=0;
+let total=0;
 
-  pedido.forEach(item=>{
-    total+=item.preco;
-  });
+pedido.forEach(item=>{
+total+=item.preco;
+});
 
-  const metodo=
-  document.getElementById("metodoPagamento").value;
+const metodo=
+document.getElementById("metodoPagamento").value;
 
-  if(metodo==="Dinheiro"){
+if(metodo==="Dinheiro"){
 
-    const pago=parseFloat(
-      document.getElementById("valorPago").value
-    );
+const pago=parseFloat(
+document.getElementById("valorPago").value
+);
 
-    if(isNaN(pago)||pago<total){
+if(isNaN(pago)||pago<total){
 
-      alert("Valor insuficiente!");
+alert("Valor insuficiente!");
 
-      return;
-    }
+return;
 
-    const troco=(pago-total).toFixed(2);
-
-    document.getElementById("trocoTexto")
-    .innerText=
-    `Troco: R$ ${troco.replace(".",",")}`;
-  }
-
-  vendas.push({
-    total,
-    metodo,
-    produtos:[...pedido]
-  });
-
-  salvarDados();
-
-  setTimeout(()=>{
-
-    alert("Venda finalizada 🎉");
-
-    fecharModal("modalFinalizar");
-
-    limparPedido();
-
-    document.getElementById("valorPago").value="";
-
-    document.getElementById("trocoTexto")
-    .innerText="Troco: R$ 0,00";
-
-  },300);
 }
 
-function abrirFecharCaixa(){
+}
 
-  document.getElementById("modalCaixa")
-  .style.display="flex";
+vendas.push({
+total,
+metodo,
+produtos:[...pedido]
+});
 
-  mostrarRelatorio(vendas,"Caixa Atual");
+salvarDados();
+
+alert("Venda finalizada 🎉");
+
+fecharModal("modalFinalizar");
+
+limparPedido();
+
+document.getElementById("valorPago").value="";
+
+document.getElementById("trocoTexto")
+.innerText="Troco: R$ 0,00";
+
 }
 
 function mostrarRelatorio(listaVendas,titulo){
 
-  let totalCaixa=0;
-  let totalPix=0;
-  let totalDebito=0;
-  let totalCredito=0;
-  let totalDinheiro=0;
+let totalCaixa=0;
+let totalPix=0;
+let totalDebito=0;
+let totalCredito=0;
+let totalDinheiro=0;
 
-  let itensVendidos={};
+let itensVendidos={};
 
-  listaVendas.forEach(venda=>{
+listaVendas.forEach(venda=>{
 
-    totalCaixa+=venda.total;
+totalCaixa+=venda.total;
 
-    if(venda.metodo==="PIX")
-    totalPix+=venda.total;
+if(venda.metodo==="PIX")
+totalPix+=venda.total;
 
-    if(venda.metodo==="Débito")
-    totalDebito+=venda.total;
+if(venda.metodo==="Débito")
+totalDebito+=venda.total;
 
-    if(venda.metodo==="Crédito")
-    totalCredito+=venda.total;
+if(venda.metodo==="Crédito")
+totalCredito+=venda.total;
 
-    if(venda.metodo==="Dinheiro")
-    totalDinheiro+=venda.total;
+if(venda.metodo==="Dinheiro")
+totalDinheiro+=venda.total;
 
-    venda.produtos.forEach(prod=>{
+venda.produtos.forEach(prod=>{
 
-      if(!itensVendidos[prod.nome]){
-        itensVendidos[prod.nome]=0;
-      }
+if(!itensVendidos[prod.nome]){
+itensVendidos[prod.nome]=0;
+}
 
-      itensVendidos[prod.nome]++;
-    });
+itensVendidos[prod.nome]++;
 
-  });
+});
 
-  let tabelaHTML=`
+});
 
-  <h2 style="margin-bottom:20px;">
-    ${titulo}
-  </h2>
+let tabelaHTML=`
 
-  <table class="tabela-caixa">
+<h2 style="margin-bottom:20px;">
+${titulo}
+</h2>
 
-    <tr>
-      <th>Item</th>
-      <th>Quantidade</th>
-    </tr>
+<table class="tabela-caixa">
 
-  `;
+<tr>
+<th>Item</th>
+<th>Quantidade</th>
+</tr>
 
-  for(let item in itensVendidos){
+`;
 
-    tabelaHTML+=`
+for(let item in itensVendidos){
 
-    <tr>
-      <td>${item}</td>
-      <td>${itensVendidos[item]}</td>
-    </tr>
+tabelaHTML+=`
 
-    `;
-  }
+<tr>
+<td>${item}</td>
+<td>${itensVendidos[item]}</td>
+</tr>
 
-  tabelaHTML+=`
+`;
 
-  </table>
+}
 
-  <div class="resumo-caixa">
+tabelaHTML+=`
 
-    <strong>💵 Dinheiro:</strong>
-    R$ ${totalDinheiro.toFixed(2).replace(".",",")}
-    <br>
+</table>
 
-    <strong>📱 PIX:</strong>
-    R$ ${totalPix.toFixed(2).replace(".",",")}
-    <br>
+<div class="resumo-caixa">
 
-    <strong>💳 Débito:</strong>
-    R$ ${totalDebito.toFixed(2).replace(".",",")}
-    <br>
+<strong>💵 Dinheiro:</strong>
+R$ ${totalDinheiro.toFixed(2).replace(".",",")}
+<br>
 
-    <strong>💳 Crédito:</strong>
-    R$ ${totalCredito.toFixed(2).replace(".",",")}
-    <br><br>
+<strong>📱 PIX:</strong>
+R$ ${totalPix.toFixed(2).replace(".",",")}
+<br>
 
-    <strong>🛒 TOTAL FINAL:</strong>
-    R$ ${totalCaixa.toFixed(2).replace(".",",")}
+<strong>💳 Débito:</strong>
+R$ ${totalDebito.toFixed(2).replace(".",",")}
+<br>
 
-  </div>
+<strong>💳 Crédito:</strong>
+R$ ${totalCredito.toFixed(2).replace(".",",")}
+<br><br>
 
-  `;
+<strong>🛒 TOTAL FINAL:</strong>
+R$ ${totalCaixa.toFixed(2).replace(".",",")}
 
-  document.getElementById("listaVendas")
-  .innerHTML=tabelaHTML;
+</div>
 
-  document.getElementById("totalCaixa")
-  .innerText=
-  `Total Ganho: R$ ${totalCaixa.toFixed(2).replace(".",",")}`;
+`;
+
+document.getElementById("listaVendas")
+.innerHTML=tabelaHTML;
+
+document.getElementById("totalCaixa")
+.innerText=
+`Total Ganho: R$ ${totalCaixa.toFixed(2).replace(".",",")}`;
+
+}
+
+function abrirFecharCaixa(){
+
+document.getElementById("modalCaixa")
+.style.display="flex";
+
+mostrarRelatorio(vendas,"Caixa Atual");
+
 }
 
 function arquivarCaixa(){
 
-  if(vendas.length===0){
+if(vendas.length===0){
 
-    alert("Não há vendas!");
+alert("Não há vendas!");
 
-    return;
-  }
+return;
 
-  const nomeDia=prompt(
-    "Digite o nome do caixa:\nEx: Sábado"
-  );
-
-  if(!nomeDia) return;
-
-  let historico=
-  JSON.parse(
-    localStorage.getItem("historicoCaixas")
-  ) || [];
-
-  historico.push({
-    nome:nomeDia,
-    data:new Date().toLocaleString(),
-    vendas:[...vendas]
-  });
-
-  localStorage.setItem(
-    "historicoCaixas",
-    JSON.stringify(historico)
-  );
-
-  vendas=[];
-  pedido=[];
-
-  salvarDados();
-
-  atualizarPedido();
-
-  alert("Caixa arquivado 📦✨");
 }
 
-function abrirHistorico(){
+const nomeDia=prompt(
+"Digite o nome do caixa:\nEx: Sábado"
+);
 
-  const historico=
-  JSON.parse(
-    localStorage.getItem("historicoCaixas")
-  ) || [];
+if(!nomeDia) return;
 
-  if(historico.length===0){
+let historico=
+JSON.parse(
+localStorage.getItem("historicoCaixas")
+) || [];
 
-    alert("Nenhum histórico!");
+historico.push({
+nome:nomeDia,
+data:new Date().toLocaleString(),
+vendas:[...vendas]
+});
 
-    return;
-  }
+localStorage.setItem(
+"historicoCaixas",
+JSON.stringify(historico)
+);
 
-  let html=`
-  
-  <h2 style="margin-bottom:25px;">
-    📊 Histórico de Caixas
-  </h2>
-  
-  `;
+vendas=[];
+pedido=[];
 
-  historico.forEach((caixa,index)=>{
+salvarDados();
 
-    let total=0;
+atualizarPedido();
 
-    caixa.vendas.forEach(venda=>{
-      total+=venda.total;
-    });
+alert("Caixa arquivado 📦✨");
 
-    html+=`
+}
 
-    <div class="card"
-    style="padding:20px;margin-bottom:20px;">
+function abrirHistoricoArquivado(){
 
-      <h3>${caixa.nome}</h3>
+const historico=
+JSON.parse(
+localStorage.getItem("historicoCaixas")
+) || [];
 
-      <br>
+if(historico.length===0){
 
-      📅 ${caixa.data}
+alert("Nenhum histórico!");
 
-      <br><br>
+return;
 
-      💰 Total:
-      <strong>
-        R$ ${total.toFixed(2).replace(".",",")}
-      </strong>
+}
 
-      <br><br>
+document.getElementById("modalCaixa")
+.style.display="flex";
 
-      <button
-      class="btn"
-      onclick="verDetalhesCaixa(${index})">
+let html=`
+<h2 style="margin-bottom:25px;">
+📊 Totais Arquivados
+</h2>
+`;
 
-      Ver Detalhes
+historico.forEach((caixa,index)=>{
 
-      </button>
+let total=0;
 
-    </div>
+caixa.vendas.forEach(venda=>{
+total+=venda.total;
+});
 
-    `;
-  });
+html+=`
 
-  document.getElementById("listaVendas")
-  .innerHTML=html;
+<div class="card"
+style="padding:20px;margin-bottom:20px;">
 
-  document.getElementById("modalCaixa")
-  .style.display="flex";
+<h3>${caixa.nome}</h3>
+
+<br>
+
+📅 ${caixa.data}
+
+<br><br>
+
+💰 Total:
+<strong>
+R$ ${total.toFixed(2).replace(".",",")}
+</strong>
+
+<br><br>
+
+<button
+class="btn"
+onclick="verDetalhesCaixa(${index})">
+
+Ver Detalhes
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("listaVendas")
+.innerHTML=html;
+
+}
+
+function abrirHistoricoRapido(){
+
+if(vendas.length===0){
+
+alert("Nenhuma venda no momento!");
+
+return;
+
+}
+
+document.getElementById("modalCaixa")
+.style.display="flex";
+
+mostrarRelatorio(vendas,"Histórico Atual");
+
 }
 
 function verDetalhesCaixa(index){
 
-  const historico=
-  JSON.parse(
-    localStorage.getItem("historicoCaixas")
-  ) || [];
+const historico=
+JSON.parse(
+localStorage.getItem("historicoCaixas")
+) || [];
 
-  const caixa=historico[index];
+const caixa=historico[index];
 
-  mostrarRelatorio(
-    caixa.vendas,
-    caixa.nome
-  );
+mostrarRelatorio(
+caixa.vendas,
+caixa.nome
+);
+
 }
 
 function resetarTudo(){
 
-  const numero1=
-  Math.floor(Math.random()*10)+1;
+const numero1=
+Math.floor(Math.random()*10)+1;
 
-  const numero2=
-  Math.floor(Math.random()*10)+1;
+const numero2=
+Math.floor(Math.random()*10)+1;
 
-  const resposta=prompt(
-    `⚠️ ATENÇÃO ⚠️\n\n${numero1} + ${numero2} = ?`
-  );
+const resposta=prompt(
+`⚠️ ATENÇÃO ⚠️\n\n${numero1} + ${numero2} = ?`
+);
 
-  if(resposta===null) return;
+if(resposta===null) return;
 
-  if(parseInt(resposta)!==numero1+numero2){
+if(parseInt(resposta)!==numero1+numero2){
 
-    alert("Conta incorreta 🔒");
+alert("Conta incorreta 🔒");
 
-    return;
-  }
+return;
 
-  const confirmar=confirm(
-    "Deseja apagar TUDO?"
-  );
+}
 
-  if(!confirmar) return;
+const confirmar=confirm(
+"Deseja apagar TUDO?"
+);
 
-  vendas=[];
-  pedido=[];
+if(!confirmar) return;
 
-  localStorage.clear();
+vendas=[];
+pedido=[];
 
-  atualizarPedido();
+localStorage.clear();
 
-  document.getElementById("listaVendas")
-  .innerHTML="";
+atualizarPedido();
 
-  document.getElementById("totalCaixa")
-  .innerText=
-  "Total Ganho: R$ 0,00";
+document.getElementById("listaVendas")
+.innerHTML="";
 
-  alert("Tudo apagado 🧹");
+document.getElementById("totalCaixa")
+.innerText=
+"Total Ganho: R$ 0,00";
+
+alert("Tudo apagado 🧹");
+
 }
 
 carregarDados();
-
-  function calcularTrocoAutomatico(){
-
-  let total=0;
-
-  pedido.forEach(item=>{
-    total+=item.preco;
-  });
-
-  const pago=parseFloat(
-    document.getElementById("valorPago").value
-  );
-
-  if(isNaN(pago)){
-
-    document.getElementById("trocoTexto")
-    .innerText="Troco: R$ 0,00";
-
-    return;
-  }
-
-  const troco=pago-total;
-
-  if(troco<0){
-
-    return;
-  }
-
-  document.getElementById("trocoTexto")
-  .innerText=
-  `Troco: R$ ${troco
-  .toFixed(2)
-  .replace(".",",")}`;
-}
 
 </script>
 
