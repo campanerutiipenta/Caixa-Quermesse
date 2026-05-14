@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Caixa da Quermesse</title>
 
 <style>
@@ -21,7 +21,7 @@ body{
 
 .topo{
   background:linear-gradient(90deg,#ff8a3d,#ff5f57);
-  color:white;
+  color:#fff;
   padding:18px 30px;
   font-size:2rem;
   font-weight:bold;
@@ -33,13 +33,6 @@ body{
   grid-template-columns:1fr 1fr;
   gap:20px;
   padding:20px;
-  align-items:start;
-}
-
-h2{
-  margin-bottom:15px;
-  color:#444;
-  font-size:1.4rem;
 }
 
 .produtos{
@@ -49,14 +42,13 @@ h2{
 }
 
 .produto{
-  background:white;
+  background:#fff;
   border:none;
   border-radius:15px;
   padding:18px 12px;
   cursor:pointer;
   transition:.2s;
   box-shadow:0 2px 8px rgba(0,0,0,.08);
-  min-height:100px;
 }
 
 .produto:hover{
@@ -64,23 +56,21 @@ h2{
 }
 
 .produto .emoji{
-  font-size:1.7rem;
+  font-size:1.6rem;
   margin-bottom:8px;
 }
 
 .produto .nome{
-  font-size:1rem;
   font-weight:bold;
   margin-bottom:10px;
 }
 
 .produto .preco{
   color:#ff5f57;
-  font-size:1.05rem;
 }
 
 .card{
-  background:white;
+  background:#fff;
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 2px 10px rgba(0,0,0,.08);
@@ -89,24 +79,22 @@ h2{
 
 .card-topo{
   background:linear-gradient(90deg,#ff8a3d,#ff5f57);
-  color:white;
+  color:#fff;
   padding:14px 18px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  font-size:1.1rem;
   font-weight:bold;
 }
 
 .btn-limpar{
-  background:white;
+  background:#fff;
   border:none;
   color:#ff5f57;
   padding:8px 14px;
   border-radius:12px;
   cursor:pointer;
   font-weight:bold;
-  font-size:.95rem;
 }
 
 .lista{
@@ -121,14 +109,13 @@ h2{
   align-items:center;
   padding:14px 0;
   border-bottom:1px solid #eee;
-  font-size:1rem;
   gap:10px;
 }
 
 .item-centro{
   text-align:center;
   font-weight:bold;
-  opacity:.75;
+  opacity:.7;
 }
 
 .item div:nth-child(3){
@@ -138,17 +125,11 @@ h2{
 .remover-btn{
   border:none;
   background:#ff5f57;
-  color:white;
+  color:#fff;
   width:28px;
   height:28px;
   border-radius:8px;
   cursor:pointer;
-  font-weight:bold;
-  transition:.2s;
-}
-
-.remover-btn:hover{
-  transform:scale(1.08);
 }
 
 .subtotal{
@@ -159,53 +140,34 @@ h2{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  font-size:1.6rem;
+  font-size:1.5rem;
   font-weight:bold;
   color:#ff5f57;
-}
-
-.troco{
-  position:sticky;
-  top:20px;
 }
 
 .conteudo{
   padding:18px;
 }
 
-label{
-  font-weight:bold;
-  display:block;
-  margin-bottom:10px;
-}
-
-input{
+input,select{
   width:100%;
   padding:13px;
   border-radius:12px;
   border:1px solid #ddd;
-  font-size:.95rem;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 
-.btn-calcular,
-.btn-pix{
+.btn{
   width:100%;
   border:none;
   background:linear-gradient(90deg,#ff8a3d,#ff5f57);
-  color:white;
+  color:#fff;
   padding:15px;
   border-radius:14px;
   cursor:pointer;
   font-size:1rem;
   font-weight:bold;
-  margin-bottom:14px;
-  transition:.2s;
-}
-
-.btn-calcular:hover,
-.btn-pix:hover{
-  transform:translateY(-2px);
+  margin-bottom:12px;
 }
 
 .resultado{
@@ -216,43 +178,88 @@ input{
   display:none;
 }
 
-.resultado h3{
-  color:#0a8f47;
-  margin-bottom:18px;
-  font-size:1.6rem;
-}
-
 .notas{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
 }
 
-.nota{
-  font-size:.95rem;
-}
-
-.pix-area{
-  margin-top:16px;
-  background:#fff7f2;
-  border:2px solid #ffe1d2;
-  border-radius:16px;
-  padding:20px;
-  text-align:center;
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
   display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-.pix-area img{
-  width:220px;
-  height:220px;
-  border-radius:12px;
-  margin-bottom:12px;
+.modal-box{
+  background:#fff;
+  width:100%;
+  max-width:420px;
+  border-radius:20px;
+  padding:25px;
 }
 
-.pix-texto{
-  font-size:.95rem;
-  color:#666;
-  word-break:break-all;
+.modal-box-caixa{
+  background:#fff;
+  width:100%;
+  height:100%;
+  padding:35px;
+  overflow-y:auto;
+}
+
+.total-caixa{
+  background:#fff2eb;
+  border:2px solid #ffd8c4;
+  padding:18px;
+  border-radius:16px;
+  font-size:1.5rem;
+  font-weight:bold;
+  color:#ff5f57;
+  margin-bottom:18px;
+}
+
+.tabela-caixa{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+
+.tabela-caixa th,
+.tabela-caixa td{
+  border:1px solid #ddd;
+  padding:12px;
+}
+
+.tabela-caixa th{
+  background:#f2f2f2;
+}
+
+.resumo-caixa{
+  margin-top:20px;
+  background:#fff7f2;
+  border:2px solid #ffd8c4;
+  border-radius:16px;
+  padding:18px;
+  line-height:1.8;
+}
+
+.btn-reset-total{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:70px;
+  height:70px;
+  border:none;
+  border-radius:50%;
+  background:#ff2d2d;
+  color:#fff;
+  font-size:2rem;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+  z-index:999;
 }
 
 @media(max-width:1000px){
@@ -280,7 +287,9 @@ input{
 
 <div>
 
-<h2>💼 Produtos</h2>
+<h2 style="margin-bottom:15px;">
+💼 Produtos
+</h2>
 
 <div class="produtos" id="produtos"></div>
 
@@ -291,40 +300,39 @@ input{
 <div class="card">
 
 <div class="card-topo">
+
 <span>🛒 Pedido Atual</span>
 
 <button class="btn-limpar" onclick="limparPedido()">
 🗑 Limpar
 </button>
+
 </div>
 
 <div class="lista" id="lista"></div>
 
 <div class="subtotal">
+
 <span>Subtotal:</span>
+
 <span id="total">R$ 0,00</span>
-</div>
 
 </div>
 
-<div class="card troco">
+</div>
+
+<div class="card">
 
 <div class="card-topo">
-<span>💵 Troco e PIX</span>
+<span>💵 Troco</span>
 </div>
 
 <div class="conteudo">
 
-<label>Quanto o cliente deu?</label>
+<input type="number" id="valorPago" placeholder="Quanto o cliente deu?">
 
-<input type="number" id="valorPago" placeholder="Ex: 100">
-
-<button class="btn-calcular" onclick="calcularTroco()">
+<button class="btn" onclick="calcularTroco()">
 🧮 Calcular Troco
-</button>
-
-<button class="btn-pix" onclick="gerarPix()">
-📱 Gerar PIX
 </button>
 
 <div class="resultado" id="resultadoTroco">
@@ -335,11 +343,21 @@ input{
 
 </div>
 
-<div class="pix-area" id="pixArea">
+<button class="btn" onclick="abrirFinalizacao()">
+✅ Finalizar Venda
+</button>
 
-<img id="qrPix">
+<button class="btn" onclick="abrirFecharCaixa()">
+📦 Caixa Atual
+</button>
 
-<div class="pix-texto" id="pixCopia"></div>
+<button class="btn" onclick="arquivarCaixa()">
+📁 Arquivar Caixa
+</button>
+
+<button class="btn" onclick="abrirHistorico()">
+📊 Visualizar Totais
+</button>
 
 </div>
 
@@ -349,11 +367,61 @@ input{
 
 </div>
 
+<div class="modal" id="modalFinalizar">
+
+<div class="modal-box">
+
+<h3>💳 Como o cliente pagou?</h3>
+
+<select id="metodoPagamento">
+
+<option value="Dinheiro">💵 Dinheiro</option>
+
+<option value="PIX">📱 PIX</option>
+
+<option value="Débito">💳 Débito</option>
+
+<option value="Crédito">💳 Crédito</option>
+
+</select>
+
+<button class="btn" onclick="finalizarVenda()">
+Finalizar
+</button>
+
+<button class="btn" onclick="fecharModal('modalFinalizar')">
+Cancelar
+</button>
+
 </div>
+
+</div>
+
+<div class="modal" id="modalCaixa">
+
+<div class="modal-box-caixa">
+
+<div class="total-caixa" id="totalCaixa">
+Total Ganho: R$ 0,00
+</div>
+
+<div id="listaVendas"></div>
+
+<button class="btn" onclick="fecharModal('modalCaixa')" style="margin-top:25px;">
+Fechar
+</button>
+
+</div>
+
+</div>
+
+<button class="btn-reset-total" onclick="resetarTudo()">
+⚠️
+</button>
 
 <script>
 
-const produtos = [
+const produtos=[
   {emoji:"🌭",nome:"Cachorro Quente",preco:12},
   {emoji:"🔥",nome:"Quentão",preco:10},
   {emoji:"🌽",nome:"Milho",preco:8},
@@ -365,21 +433,45 @@ const produtos = [
   {emoji:"🍟",nome:"Batata Frita",preco:15},
   {emoji:"🥖",nome:"Pão com Linguiça",preco:14},
   {emoji:"🥟",nome:"Fogazza",preco:13},
-  {emoji:"🎟️",nome:"Cartela de Bingo",preco:5}
+  {emoji:"🎟️",nome:"Cartela de Bingo",preco:5},
+  {emoji:"🏆",nome:"Bingão",preco:20},
+  {emoji:"🥜",nome:"Chá do Padre",preco:9}
 ];
 
 let pedido=[];
+let vendas=[];
 
 const produtosDiv=document.getElementById("produtos");
 const lista=document.getElementById("lista");
 const totalEl=document.getElementById("total");
 
+function salvarDados(){
+  localStorage.setItem("quermesse_pedido",JSON.stringify(pedido));
+  localStorage.setItem("quermesse_vendas",JSON.stringify(vendas));
+}
+
+function carregarDados(){
+
+  const pedidoSalvo=localStorage.getItem("quermesse_pedido");
+  const vendasSalvas=localStorage.getItem("quermesse_vendas");
+
+  if(pedidoSalvo){
+    pedido=JSON.parse(pedidoSalvo);
+  }
+
+  if(vendasSalvas){
+    vendas=JSON.parse(vendasSalvas);
+  }
+
+  atualizarPedido();
+}
+
 produtos.forEach(produto=>{
 
-  produtosDiv.innerHTML += `
+  produtosDiv.innerHTML+=`
 
   <button class="produto"
-    onclick='adicionarProduto(${JSON.stringify(produto)})'>
+  onclick='adicionarProduto(${JSON.stringify(produto)})'>
 
     <div class="emoji">${produto.emoji}</div>
 
@@ -395,23 +487,19 @@ produtos.forEach(produto=>{
 });
 
 function adicionarProduto(produto){
-
   pedido.push(produto);
-
   atualizarPedido();
+  salvarDados();
 }
 
 function removerItem(nome){
 
-  const index = pedido.findIndex(
-    item => item.nome === nome
-  );
+  const index=pedido.findIndex(item=>item.nome===nome);
 
-  if(index !== -1){
-
+  if(index!==-1){
     pedido.splice(index,1);
-
     atualizarPedido();
+    salvarDados();
   }
 }
 
@@ -420,11 +508,11 @@ function atualizarPedido(){
   lista.innerHTML="";
 
   let agrupados={};
+  let total=0;
 
   pedido.forEach(item=>{
 
     if(!agrupados[item.nome]){
-
       agrupados[item.nome]={
         quantidade:0,
         preco:item.preco,
@@ -435,23 +523,18 @@ function atualizarPedido(){
     agrupados[item.nome].quantidade++;
   });
 
-  let total=0;
-
   for(let nome in agrupados){
 
     let item=agrupados[nome];
-
     let subtotal=item.preco*item.quantidade;
 
     total+=subtotal;
 
-    lista.innerHTML += `
+    lista.innerHTML+=`
 
     <div class="item">
 
-      <div>
-        ${item.emoji} ${nome}
-      </div>
+      <div>${item.emoji} ${nome}</div>
 
       <div class="item-centro">
         x${item.quantidade}
@@ -462,8 +545,8 @@ function atualizarPedido(){
       </div>
 
       <button class="remover-btn"
-        onclick="removerItem('${nome}')">
-        −
+      onclick="removerItem('${nome}')">
+      −
       </button>
 
     </div>
@@ -471,20 +554,16 @@ function atualizarPedido(){
     `;
   }
 
-  totalEl.innerText=
-  `R$ ${total.toFixed(2).replace(".",",")}`;
+  totalEl.innerText=`R$ ${total.toFixed(2).replace(".",",")}`;
 }
 
 function limparPedido(){
 
   pedido=[];
-
   atualizarPedido();
+  salvarDados();
 
   document.getElementById("resultadoTroco").style.display="none";
-
-  document.getElementById("pixArea").style.display="none";
-
   document.getElementById("valorPago").value="";
 }
 
@@ -500,8 +579,7 @@ function calcularTroco(){
     document.getElementById("valorPago").value
   );
 
-  if(isNaN(pago) || pago<total){
-
+  if(isNaN(pago)||pago<total){
     alert("Valor insuficiente!");
     return;
   }
@@ -523,12 +601,10 @@ function calcularTroco(){
 
     if(qtd>0){
 
-      notasHTML += `
-      
-      <div class="nota">
+      notasHTML+=`
+      <div>
         ${qtd}x R$ ${nota.toFixed(2).replace(".",",")}
       </div>
-      
       `;
 
       troco=(troco%nota).toFixed(2);
@@ -539,7 +615,21 @@ function calcularTroco(){
   document.getElementById("notasTroco").innerHTML=notasHTML;
 }
 
-function gerarPix(){
+function abrirFinalizacao(){
+
+  if(pedido.length===0){
+    alert("Adicione itens ao pedido!");
+    return;
+  }
+
+  document.getElementById("modalFinalizar").style.display="flex";
+}
+
+function fecharModal(id){
+  document.getElementById(id).style.display="none";
+}
+
+function finalizarVenda(){
 
   let total=0;
 
@@ -547,36 +637,277 @@ function gerarPix(){
     total+=item.preco;
   });
 
-  if(total<=0){
+  const metodo=
+  document.getElementById("metodoPagamento").value;
 
-    alert("Adicione itens ao pedido!");
+  vendas.push({
+    total,
+    metodo,
+    produtos:[...pedido]
+  });
+
+  salvarDados();
+
+  alert("Venda finalizada 🎉");
+
+  fecharModal("modalFinalizar");
+
+  limparPedido();
+}
+
+function abrirFecharCaixa(){
+
+  document.getElementById("modalCaixa").style.display="flex";
+
+  mostrarRelatorio(vendas,"Caixa Atual");
+}
+
+function mostrarRelatorio(listaVendas,titulo){
+
+  let totalCaixa=0;
+  let totalPix=0;
+  let totalDebito=0;
+  let totalCredito=0;
+  let totalDinheiro=0;
+
+  let itensVendidos={};
+
+  listaVendas.forEach(venda=>{
+
+    totalCaixa+=venda.total;
+
+    if(venda.metodo==="PIX") totalPix+=venda.total;
+    if(venda.metodo==="Débito") totalDebito+=venda.total;
+    if(venda.metodo==="Crédito") totalCredito+=venda.total;
+    if(venda.metodo==="Dinheiro") totalDinheiro+=venda.total;
+
+    venda.produtos.forEach(prod=>{
+
+      if(!itensVendidos[prod.nome]){
+        itensVendidos[prod.nome]=0;
+      }
+
+      itensVendidos[prod.nome]++;
+    });
+
+  });
+
+  let tabelaHTML=`
+
+  <h2 style="margin-bottom:20px;">
+    ${titulo}
+  </h2>
+
+  <table class="tabela-caixa">
+
+    <tr>
+      <th>Item</th>
+      <th>Quantidade</th>
+    </tr>
+
+  `;
+
+  for(let item in itensVendidos){
+
+    tabelaHTML+=`
+
+    <tr>
+      <td>${item}</td>
+      <td>${itensVendidos[item]}</td>
+    </tr>
+
+    `;
+  }
+
+  tabelaHTML+=`
+
+  </table>
+
+  <div class="resumo-caixa">
+
+    <strong>💵 Dinheiro:</strong>
+    R$ ${totalDinheiro.toFixed(2).replace(".",",")}
+    <br>
+
+    <strong>📱 PIX:</strong>
+    R$ ${totalPix.toFixed(2).replace(".",",")}
+    <br>
+
+    <strong>💳 Débito:</strong>
+    R$ ${totalDebito.toFixed(2).replace(".",",")}
+    <br>
+
+    <strong>💳 Crédito:</strong>
+    R$ ${totalCredito.toFixed(2).replace(".",",")}
+    <br><br>
+
+    <strong>🛒 TOTAL FINAL:</strong>
+    R$ ${totalCaixa.toFixed(2).replace(".",",")}
+
+  </div>
+
+  `;
+
+  document.getElementById("listaVendas").innerHTML=tabelaHTML;
+
+  document.getElementById("totalCaixa").innerText=
+  `Total Ganho: R$ ${totalCaixa.toFixed(2).replace(".",",")}`;
+}
+
+function arquivarCaixa(){
+
+  if(vendas.length===0){
+    alert("Não há vendas!");
     return;
   }
 
-  const chavePix="11978540688";
+  const nomeDia=prompt(
+    "Digite o nome do caixa:\nEx: Sábado"
+  );
 
-  const valor=total.toFixed(2);
+  if(!nomeDia) return;
 
-  const payload=
-  `PIX QUERMESSE | VALOR R$ ${valor} | CHAVE ${chavePix}`;
+  let historico=
+  JSON.parse(
+    localStorage.getItem("historicoCaixas")
+  ) || [];
 
-  const qrCodeUrl=
-  `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(payload)}`;
+  historico.push({
+    nome:nomeDia,
+    data:new Date().toLocaleString(),
+    vendas:[...vendas]
+  });
 
-  document.getElementById("pixArea").style.display="block";
+  localStorage.setItem(
+    "historicoCaixas",
+    JSON.stringify(historico)
+  );
 
-  document.getElementById("qrPix").src=qrCodeUrl;
+  vendas=[];
+  pedido=[];
 
-  document.getElementById("pixCopia").innerHTML=
-  `
-  <strong>Pagamento PIX</strong><br><br>
+  salvarDados();
+  atualizarPedido();
 
-  Valor: R$ ${valor.replace(".",",")}<br><br>
-
-  Chave PIX:<br>
-  ${chavePix}
-  `;
+  alert("Caixa arquivado 📦✨");
 }
+
+function abrirHistorico(){
+
+  const historico=
+  JSON.parse(
+    localStorage.getItem("historicoCaixas")
+  ) || [];
+
+  if(historico.length===0){
+    alert("Nenhum histórico!");
+    return;
+  }
+
+  let html=`
+  
+  <h2 style="margin-bottom:25px;">
+    📊 Histórico de Caixas
+  </h2>
+  
+  `;
+
+  historico.forEach((caixa,index)=>{
+
+    let total=0;
+
+    caixa.vendas.forEach(venda=>{
+      total+=venda.total;
+    });
+
+    html+=`
+
+    <div class="card" style="padding:20px;margin-bottom:20px;">
+
+      <h3>${caixa.nome}</h3>
+
+      <br>
+
+      📅 ${caixa.data}
+
+      <br><br>
+
+      💰 Total:
+      <strong>
+        R$ ${total.toFixed(2).replace(".",",")}
+      </strong>
+
+      <br><br>
+
+      <button class="btn"
+      onclick="verDetalhesCaixa(${index})">
+
+      Ver Detalhes
+
+      </button>
+
+    </div>
+
+    `;
+  });
+
+  document.getElementById("listaVendas").innerHTML=html;
+
+  document.getElementById("modalCaixa")
+  .style.display="flex";
+}
+
+function verDetalhesCaixa(index){
+
+  const historico=
+  JSON.parse(
+    localStorage.getItem("historicoCaixas")
+  ) || [];
+
+  const caixa=historico[index];
+
+  mostrarRelatorio(caixa.vendas,caixa.nome);
+}
+
+function resetarTudo(){
+
+  const numero1=Math.floor(Math.random()*10)+1;
+  const numero2=Math.floor(Math.random()*10)+1;
+
+  const resposta=prompt(
+    `⚠️ ATENÇÃO ⚠️\n\n${numero1} + ${numero2} = ?`
+  );
+
+  if(resposta===null) return;
+
+  if(parseInt(resposta)!==numero1+numero2){
+
+    alert("Conta incorreta 🔒");
+    return;
+  }
+
+  const confirmar=confirm(
+    "Deseja apagar TUDO?"
+  );
+
+  if(!confirmar) return;
+
+  vendas=[];
+  pedido=[];
+
+  localStorage.clear();
+
+  atualizarPedido();
+
+  document.getElementById("listaVendas").innerHTML="";
+
+  document.getElementById("totalCaixa").innerText=
+  "Total Ganho: R$ 0,00";
+
+  alert("Tudo apagado 🧹");
+}
+
+carregarDados();
 
 </script>
 
