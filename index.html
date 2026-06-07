@@ -282,6 +282,17 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        .btn-mini{
+    width:110px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#ff8a3d,#ff5f57);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    flex-shrink:0;
+}
     </style>
 </head>
 
@@ -325,10 +336,49 @@
     <div class="modal" id="modalFinalizar">
         <div class="modal-box">
             <h3 style="margin-bottom:20px;">💳 Formas de Pagamento</h3>
-            <input type="number" id="pixValor" placeholder="📱 PIX" oninput="atualizarPagamento()">
-            <input type="number" id="dinheiroValor" placeholder="💵 Dinheiro" oninput="atualizarPagamento()">
-            <input type="number" id="debitoValor" placeholder="💳 Débito" oninput="atualizarPagamento()">
-            <input type="number" id="creditoValor" placeholder="💳 Crédito" oninput="atualizarPagamento()">
+            <div style="display:flex;gap:8px;margin-bottom:10px;">
+    <button type="button" class="btn-mini" onclick="preencherTotal('pixValor')">
+        PIX 100%
+    </button>
+
+    <input type="number"
+        id="pixValor"
+        placeholder="📱 PIX"
+        oninput="atualizarPagamento()">
+</div>
+
+<div style="display:flex;gap:8px;margin-bottom:10px;">
+    <button type="button" class="btn-mini" onclick="preencherTotal('dinheiroValor')">
+        DIN 100%
+    </button>
+
+    <input type="number"
+        id="dinheiroValor"
+        placeholder="💵 Dinheiro"
+        oninput="atualizarPagamento()">
+</div>
+
+<div style="display:flex;gap:8px;margin-bottom:10px;">
+    <button type="button" class="btn-mini" onclick="preencherTotal('debitoValor')">
+        DEB 100%
+    </button>
+
+    <input type="number"
+        id="debitoValor"
+        placeholder="💳 Débito"
+        oninput="atualizarPagamento()">
+</div>
+
+<div style="display:flex;gap:8px;margin-bottom:10px;">
+    <button type="button" class="btn-mini" onclick="preencherTotal('creditoValor')">
+        CRÉD 100%
+    </button>
+
+    <input type="number"
+        id="creditoValor"
+        placeholder="💳 Crédito"
+        oninput="atualizarPagamento()">
+</div>
 
             <div class="resumo-caixa">
                 <div id="resumoTotal">Total: R$ 0,00</div>
@@ -459,13 +509,17 @@
             salvarDados();
         }
 
-        function abrirFinalizacao() {
-            if (pedido.length === 0) {
+        function abrirFinalizacao(){
+
+            if(pedido.length===0){
                 alert("Adicione itens!");
                 return;
             }
-            document.getElementById("modalFinalizar").style.display = "flex";
-        }
+            document.getElementById("modalFinalizar")
+                .style.display="flex";
+        atualizarPagamento();
+}
+    
 
         function fecharModal(id) {
             document.getElementById(id).style.display = "none";
@@ -665,6 +719,25 @@
             }
         }
 
+
+        function preencherTotal(campo){
+
+    let total=0;
+
+    pedido.forEach(item=>{
+        total+=item.preco;
+    });
+
+    document.getElementById("pixValor").value="";
+    document.getElementById("dinheiroValor").value="";
+    document.getElementById("debitoValor").value="";
+    document.getElementById("creditoValor").value="";
+
+    document.getElementById(campo).value=
+    total.toFixed(2);
+
+    atualizarPagamento();
+}
         carregarDados();
     </script>
 </body>
